@@ -23,5 +23,10 @@ public class Customer implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
+
+    @PrePersist
+    public void prePersist(){
+        createAt = new Date();
+    }
     private static final long serialVersionUID = 1L;
 }
