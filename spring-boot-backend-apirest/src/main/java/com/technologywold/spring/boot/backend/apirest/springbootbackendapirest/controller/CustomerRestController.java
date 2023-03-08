@@ -35,6 +35,7 @@ public class CustomerRestController {
     }
 
     @PutMapping("/customer/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public Customer update(@RequestBody Customer customer, @PathVariable Long id){
         Customer customerDB = iCustomerService.finById(id);
 
@@ -44,5 +45,9 @@ public class CustomerRestController {
         return iCustomerService.save(customerDB);
     }
 
-
+    @DeleteMapping("/customer/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete (@PathVariable Long id){
+        iCustomerService.delete(id);
+    }
 }
