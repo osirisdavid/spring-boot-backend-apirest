@@ -33,4 +33,16 @@ public class CustomerRestController {
     public Customer create(@RequestBody Customer customer){
         return iCustomerService.save(customer);
     }
+
+    @PutMapping("/customer/{id}")
+    public Customer update(@RequestBody Customer customer, @PathVariable Long id){
+        Customer customerDB = iCustomerService.finById(id);
+
+        customerDB.setName(customer.getName());
+        customerDB.setLastName(customer.getLastName());
+        customerDB.setEmail(customer.getEmail());
+        return iCustomerService.save(customerDB);
+    }
+
+
 }
