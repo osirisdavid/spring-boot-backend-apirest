@@ -19,4 +19,10 @@ public class CustomerRestController {
     public List<Customer> index(){
         return iCustomerService.findAll();
     }
+
+    @GetMapping("/customer")
+    public Customer show(@PathVariable Long id){
+        return iCustomerService.finById(id);
+    }
+
 }
