@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService{
@@ -21,17 +22,18 @@ public class CustomerServiceImpl implements ICustomerService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Customer finById(Long id) {
-        return null;
+        return iCustomerDAO.findById(id).orElse(null);
     }
 
     @Override
     public Customer save(Customer customer) {
-        return null;
+        return iCustomerDAO.save(customer);
     }
 
     @Override
     public void delete(Long id) {
-
+        iCustomerDAO.deleteById(id);
     }
 }
