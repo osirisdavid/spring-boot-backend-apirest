@@ -2,6 +2,6 @@
 
 ### Tecnology
 
-[java]() - java 17
-[Spring Boot]() 
-[Spring Data] - Jpa 
+* [java]() - java 17
+* [Spring Boot]() 
+*[Spring Data] - Jpa 
