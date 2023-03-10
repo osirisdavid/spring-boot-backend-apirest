@@ -7,4 +7,4 @@
 * [Spring Data]() - Jpa 
 * [Spring Web]() 
 * [Lombok]()
-* [MySQL]() - MySQL Driver Connector
+* [MySQL]() - MySQL Driver Connector.
