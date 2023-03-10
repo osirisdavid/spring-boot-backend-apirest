@@ -6,5 +6,5 @@
 * [Spring Boot]() - version 2
 * [Spring Data]() - Jpa 
 * [Spring Web]() 
-* [Lombok]()
+* [Lombok]() -
 * [MySQL]() - MySQL Driver Connector.
