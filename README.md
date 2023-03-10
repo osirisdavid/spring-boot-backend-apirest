@@ -3,5 +3,5 @@
 ### Tecnology
 
 * [java]() - java 17
-* [Spring Boot]() - version3.0
+* [Spring Boot]() - version 2
 * [Spring Data]() - Jpa 
