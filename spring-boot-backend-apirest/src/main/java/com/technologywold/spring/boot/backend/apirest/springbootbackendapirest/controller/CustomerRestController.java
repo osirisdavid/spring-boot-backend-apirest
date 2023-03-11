@@ -37,7 +37,7 @@ public class CustomerRestController {
         } catch (DataAccessException e){
             response.put("mesage", "Error al realizar consulta en la base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if(customer == null){
             response.put("mesage", "El cliente ID: ".concat(id.toString().concat(" no existe")));
