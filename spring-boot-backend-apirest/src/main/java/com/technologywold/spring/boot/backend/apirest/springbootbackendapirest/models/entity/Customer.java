@@ -16,14 +16,15 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(nullable = false)
     private String name;
     @Column(name = "last_name")
     private String lastName;
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
-
     @PrePersist
     public void prePersist(){
         createAt = new Date();
