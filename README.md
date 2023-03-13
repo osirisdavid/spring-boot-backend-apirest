@@ -5,6 +5,6 @@
 * [java]() - java 17
 * [Spring Boot]() - version 2
 * [Spring Data]() - Jpa 
-* [Spring Web]() -
+* [Spring Web]() - Permite crear servicios Rest. 
 * [Lombok]() - Anotaciones para evitar código repetido.
 * [MySQL]() - MySQL Driver Connector.
