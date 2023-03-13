@@ -6,5 +6,5 @@
 * [Spring Boot]() - version 2
 * [Spring Data]() - Jpa 
 * [Spring Web]() -
-* [Lombok]() -
+* [Lombok]() - Anotaciones para evitar código repetido.
 * [MySQL]() - MySQL Driver Connector.
