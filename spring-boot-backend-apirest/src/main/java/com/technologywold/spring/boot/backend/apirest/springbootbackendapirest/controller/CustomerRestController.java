@@ -64,14 +64,32 @@ public class CustomerRestController {
     }
 
     @PutMapping("/customer/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Customer update(@RequestBody Customer customer, @PathVariable Long id){
+    //@ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> update(@RequestBody Customer customer, @PathVariable Long id){
         Customer customerDB = iCustomerService.finById(id);
+        Customer customerUpdate = null;
 
-        customerDB.setName(customer.getName());
-        customerDB.setLastName(customer.getLastName());
-        customerDB.setEmail(customer.getEmail());
-        return iCustomerService.save(customerDB);
+        Map<String, Object> response = new HashMap<>();
+
+        if(customerDB == null){
+            response.put("mesage", "Error: no se pudo editar, el cliente ID: ".concat(id.toString().concat(" no existe en la base de datos")));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+
+        try{
+            customerDB.setName(customer.getName());
+            customerDB.setLastName(customer.getLastName());
+            customerDB.setEmail(customer.getEmail());
+            customerUpdate = iCustomerService.save(customerDB);
+        } catch (DataAccessException e){
+            response.put("mesage", "Error al actualizar el cliente en la base de datos.");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mesage", "El cliente ha sido actualizado con exito!");
+        response.put("mesage", customerUpdate);
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/customer/{id}")

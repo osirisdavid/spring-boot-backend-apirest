@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface ICustomerService {
     public List<Customer> findAll();
-
     public Customer finById(Long id);
     public Customer save(Customer customer);
     public void delete (Long id);
