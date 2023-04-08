@@ -27,7 +27,7 @@ public class CustomerRestController {
         return iCustomerService.findAll();
     }
 
-    @GetMapping("/customer")
+    @GetMapping("/customer/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> show(@PathVariable Long id){
         Customer customer = null;
@@ -94,7 +94,16 @@ public class CustomerRestController {
 
     @DeleteMapping("/customer/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete (@PathVariable Long id){
-        iCustomerService.delete(id);
+    public ResponseEntity<?> delete (@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            iCustomerService.delete(id);
+        } catch (DataAccessException e){
+            response.put("message", "Error al eliminar el cliente en la base de datos.");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("message", "El cliente ha sido eliminado con exito");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 }
