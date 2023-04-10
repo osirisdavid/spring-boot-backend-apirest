@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +52,20 @@ public class CustomerRestController {
 
     @PostMapping("/customer")
     //@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@RequestBody Customer customer){
+    public ResponseEntity<?> create(@Valid @RequestBody Customer customer, BindingResult result){
         Customer customerNew = null;
         Map<String, Object> response = new HashMap<>();
+
+        if(result.hasErrors()){
+            List<String>errors = new ArrayList<>();
+            for(FieldError err : result.getFieldErrors()){
+                errors.add("El Campo '".concat(err.getDefaultMessage()).concat( "' ").concat(err.getDefaultMessage()));
+            }
+
+            response.put("error", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
         try{
             customerNew = iCustomerService.save(customer);
         } catch (DataAccessException e){
@@ -65,11 +80,21 @@ public class CustomerRestController {
 
     @PutMapping("/customer/{id}")
     //@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> update(@RequestBody Customer customer, @PathVariable Long id){
+    public ResponseEntity<?> update(@Valid @RequestBody Customer customer, @PathVariable Long id, BindingResult result){
         Customer customerDB = iCustomerService.finById(id);
         Customer customerUpdate = null;
 
         Map<String, Object> response = new HashMap<>();
+
+        if(result.hasErrors()){
+            List<String>errors = new ArrayList<>();
+            for(FieldError err : result.getFieldErrors()){
+                errors.add("El Campo '".concat(err.getDefaultMessage()).concat( "' ").concat(err.getDefaultMessage()));
+            }
+
+            response.put("error", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
         if(customerDB == null){
             response.put("mesage", "Error: no se pudo editar, el cliente ID: ".concat(id.toString().concat(" no existe en la base de datos")));
